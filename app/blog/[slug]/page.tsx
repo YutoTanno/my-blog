@@ -17,7 +17,7 @@ export default async function ArticleDetail({ params }: Props) {
     return (
       <main className="max-w-2xl mx-auto px-4 py-16">
         <p>記事が見つかりませんでした</p>
-        <a href="blog" className="text-sm text-gray-400 hover:underline">
+        <a href="../blog" className="text-sm text-gray-400 hover:underline">
           記事一覧に戻る
         </a>
       </main>
@@ -26,7 +26,7 @@ export default async function ArticleDetail({ params }: Props) {
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-16">
-      <a href="blog" className="text-sm text-gray-400 hover:underline">
+      <a href="../blog" className="text-sm text-gray-400 hover:underline">
         記事一覧に戻る
       </a>
       <h1 className="text-3xl font-bold mt-4 mb-2">{article.title}</h1>
