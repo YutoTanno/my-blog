@@ -1,13 +1,13 @@
 import { supabase } from '@/lib/supabase'
+import { redirect } from 'next/navigation'
+import ReactMarkdown from 'react-markdown'
+import Link from 'next/link'
 
-type Props = {
-  params: Promise<{ slug: string }>
-}
+type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const { data: article } = await supabase.from('articles').select('title, summary').eq('slug', slug).single()
-
   return {
     title: `${article?.title} | My Blog`,
     description: article?.summary,
@@ -16,35 +16,30 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ArticleDetail({ params }: Props) {
   const { slug } = await params
-
-  const { data: article, error } = await supabase.from('articles').select('*').eq('slug', slug).single()
-
-  if (error || !article) {
-    return (
-      <main className="max-w-2xl mx-auto px-4 py-16">
-        <p>記事が見つかりませんでした</p>
-        <a href="../blog" className="text-sm text-gray-400 hover:underline">
-          記事一覧に戻る
-        </a>
-      </main>
-    )
-  }
+  const { data: article } = await supabase.from('articles').select('*').eq('slug', slug).single()
+  if (!article) redirect('/blog')
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-16">
-      <a href="../blog" className="text-sm text-gray-400 hover:underline">
+    <main className="max-w-3xl mx-auto px-4 py-16">
+      <Link href="/blog" className="text-sm text-gray-400 hover:text-gray-600 mb-8 block">
         記事一覧に戻る
-      </a>
-      <h1 className="text-3xl font-bold mt-4 mb-2">{article.title}</h1>
-      <p className="text-gray-400 mb-4">{new Date(article.created_at).toLocaleDateString('ja-JP')}</p>
-      <div className="flex gap-2 mb-8">
-        {article.tags.map((tag: string) => (
-          <span key={tag} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
-            {tag}
-          </span>
-        ))}
-      </div>
-      <div className="text-gray-800 leading-relaxed">{article.content}</div>
+      </Link>
+      <article>
+        <div className="mb-8">
+          <p className="text-sm text-gray-400 mb-3">{new Date(article.created_at).toLocaleDateString('ja-JP')}</p>
+          <h1 className="text-4xl font-bold leading-tight mb-4">{article.title}</h1>
+          <div className="flex gap-2 flex-wrap">
+            {article.tags?.map((tag: string) => (
+              <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="border-t pt-8 prose prose-gray max-w-none">
+          <ReactMarkdown>{article.content}</ReactMarkdown>
+        </div>
+      </article>
     </main>
   )
 }
