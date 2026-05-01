@@ -6,18 +6,18 @@ import RecordLoader from './components/RecordLoader'
 
 export const metadata: Metadata = {
   title: { default: 'cherrytan | Dev Blog', template: '%s | cherrytan' },
-  description: 'HIPHOPについての雑談記事を書いていきます。',
-  metadataBase: new URL('https://my-blog-brown-nu.vercel.app'),
+  description: 'HIPHOPが好きなWeb開発者cherrytanのブログ。Next.js・TypeScriptで自作しました。',
+  metadataBase: new URL('https://cherrytan-hiphop.vercel.app'),
   openGraph: {
     title: 'cherrytan | Dev Blog',
-    description: 'HIPHOPについての雑談記事を書いていきます。',
-    url: 'https://my-blog-brown-nu.vercel.app',
+    description: 'HIPHOPが好きなエンジニアcherrytanのブログ。',
+    url: 'https://cherrytan-hiphop.vercel.app',
     siteName: 'cherrytan',
     locale: 'ja_JP',
     type: 'website',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'cherrytan | HIPHOP Blog',
     description: 'HIPHOPについての雑談記事を書いていきます。',
   },
