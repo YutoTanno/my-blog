@@ -6,8 +6,9 @@ import PublishButton from './PublishButton'
 export const dynamic = 'force-dynamic'
 
 type Article = { id: string; title: string; slug: string; created_at: string; published: boolean }
+type Props = { searchParams: Promise<{ sort?: string }> }
 
-export default async function AdminPage() {
+export default async function AdminPage({ searchParams }: Props) {
   const supabase = await createClient()
   const {
     data: { user },
@@ -15,11 +16,13 @@ export default async function AdminPage() {
   if (!user) redirect('/admin/login')
 
   // サービスロールキーで全記事取得（下書き含む）
+  const { sort } = await searchParams
+  const ascending = sort === 'asc'
+
   const { createClient: createAdmin } = await import('@supabase/supabase-js')
   const adminClient = createAdmin(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 
-  const { data: articles } = await adminClient.from('articles').select('id, title, slug, created_at, published').order('created_at', { ascending: false })
-
+  const { data: articles } = await adminClient.from('articles').select('id, title, slug, created_at, published').order('created_at', { ascending })
   const published = articles?.filter((a) => a.published) || []
   const drafts = articles?.filter((a) => !a.published) || []
 
@@ -27,6 +30,39 @@ export default async function AdminPage() {
     <main className="max-w-2xl mx-auto px-4 py-10">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold">管理画面</h1>
+        {/* ソートボタン */}
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '24px' }}>
+          <a
+            href="/admin?sort=desc"
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              letterSpacing: '0.1em',
+              border: `1px solid ${!ascending ? '#C9A84C' : '#2a2a2a'}`,
+              background: !ascending ? '#C9A84C' : 'transparent',
+              color: !ascending ? '#0e0e0e' : '#666',
+              padding: '5px 14px',
+              borderRadius: '2px',
+              textDecoration: 'none',
+            }}>
+            NEW →
+          </a>
+          <a
+            href="/admin?sort=asc"
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              letterSpacing: '0.1em',
+              border: `1px solid ${ascending ? '#C9A84C' : '#2a2a2a'}`,
+              background: ascending ? '#C9A84C' : 'transparent',
+              color: ascending ? '#0e0e0e' : '#666',
+              padding: '5px 14px',
+              borderRadius: '2px',
+              textDecoration: 'none',
+            }}>
+            OLD →
+          </a>
+        </div>
         <div className="flex items-center gap-4">
           <LogoutButton />
           <a href="/admin/new" className="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-800">
