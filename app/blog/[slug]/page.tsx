@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import CodeBlock from '@/app/components/CodeBlock'
 import rehypeRaw from 'rehype-raw'
+import ViewTracker from '@/app/components/ViewTracker'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -37,6 +38,7 @@ export default async function ArticleDetail({ params }: Props) {
 
   return (
     <main style={{ maxWidth: '768px', margin: '0 auto', padding: '48px 24px' }}>
+      <ViewTracker slug={article.slug} />
       {/* 戻るリンク */}
       <Link
         href="/blog"
@@ -102,6 +104,17 @@ export default async function ArticleDetail({ params }: Props) {
               </span>
             ))}
           </div>
+          {/* 閲覧数 */}
+          <p
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              color: '#555',
+              letterSpacing: '0.15em',
+              marginTop: '12px',
+            }}>
+            {article.view_count ?? 0} VIEWS
+          </p>
         </div>
 
         {/* 本文 */}

@@ -5,7 +5,7 @@ import LogoutButton from './LogoutButton'
 import PublishButton from './PublishButton'
 export const dynamic = 'force-dynamic'
 
-type Article = { id: string; title: string; slug: string; created_at: string; published: boolean }
+type Article = { id: string; title: string; slug: string; created_at: string; published: boolean; view_count: number }
 type Props = { searchParams: Promise<{ sort?: string }> }
 
 export default async function AdminPage({ searchParams }: Props) {
@@ -21,13 +21,30 @@ export default async function AdminPage({ searchParams }: Props) {
 
   const { createClient: createAdmin } = await import('@supabase/supabase-js')
   const adminClient = createAdmin(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-
-  const { data: articles } = await adminClient.from('articles').select('id, title, slug, created_at, published').order('created_at', { ascending })
+  // 総閲覧数取得
+  const { data: siteStats } = await adminClient.from('site_stats').select('total_views').single()
+  const { data: articles } = await adminClient
+    .from('articles')
+    .select('id, title, slug, created_at, published, view_count') // ★ view_count 追加
+    .order('created_at', { ascending })
   const published = articles?.filter((a) => a.published) || []
   const drafts = articles?.filter((a) => !a.published) || []
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-10">
+      {/* 閲覧数サマリー */}
+      <div
+        style={{
+          background: '#161616',
+          border: '1px solid #2a2a2a',
+          borderLeft: '3px solid #C9A84C',
+          borderRadius: '4px',
+          padding: '16px 20px',
+          marginBottom: '24px',
+        }}>
+        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.2em', marginBottom: '4px' }}>TOTAL VIEWS</p>
+        <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '36px', color: '#C9A84C', letterSpacing: '0.05em' }}>{siteStats?.total_views ?? 0}</p>
+      </div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold">管理画面</h1>
         {/* ソートボタン */}
@@ -79,6 +96,7 @@ export default async function AdminPage({ searchParams }: Props) {
                 <div className="min-w-0">
                   <p className="font-medium truncate">{article.title}</p>
                   <p className="text-xs text-gray-400 mt-1">{new Date(article.created_at).toLocaleDateString('ja-JP')}</p>
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', marginTop: '2px' }}>{article.view_count ?? 0} VIEWS</p>
                 </div>
                 <div className="flex gap-2 shrink-0">
                   <a href={`/admin/edit/${article.id}`} className="text-xs border px-3 py-1 rounded-lg hover:bg-gray-50">
