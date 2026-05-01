@@ -12,6 +12,19 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${article?.title} | My Blog`,
     description: article?.summary,
+    openGraph: {
+      title: `${article?.title} | My Blog`,
+      description: article?.summary,
+      url: `https://my-blog-brown-nu.vercel.app/blog/${slug}`,
+      siteName: 'My Blog',
+      locale: 'ja_JP',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary',
+      title: `${article?.title} | My Blog`,
+      description: article?.summary,
+    },
   }
 }
 
