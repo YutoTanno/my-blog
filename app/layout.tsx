@@ -1,9 +1,13 @@
 export const metadata: Metadata = {
-  title: 'My Blog',
+  title: {
+    default: 'My Blog',
+    template: '%s | My Blog',
+  },
   description: 'Next.js・TypeScriptの学習記録。Web開発の学習過程をアウトプットしています。',
+  metadataBase: new URL('https://my-blog-brown-nu.vercel.app'),
   openGraph: {
     title: 'My Blog',
-    description: 'Next.js・TypeScriptの学習記録',
+    description: 'Next.js・TypeScriptの学習記録。Web開発の学習過程をアウトプットしています。',
     url: 'https://my-blog-brown-nu.vercel.app',
     siteName: 'My Blog',
     locale: 'ja_JP',
@@ -12,6 +16,6 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: 'My Blog',
-    description: 'Next.js・TypeScriptの学習記録',
+    description: 'Next.js・TypeScriptの学習記録。Web開発の学習過程をアウトプットしています。',
   },
 }
