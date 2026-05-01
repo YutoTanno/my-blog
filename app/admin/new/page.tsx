@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import ImageUploader from '@/app/components/ImageUploader'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
@@ -14,6 +16,7 @@ export default function NewArticlePage() {
   const [summary, setSummary] = useState('')
   const [content, setContent] = useState('')
   const [tags, setTags] = useState('')
+  const [thumbnailUrl, setThumbnailUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -31,6 +34,7 @@ export default function NewArticlePage() {
       content,
       tags: tagsArray,
       published,
+      thumbnail_url: thumbnailUrl,
     })
     if (error) {
       setError('投稿に失敗しました：' + error.message)
@@ -50,6 +54,17 @@ export default function NewArticlePage() {
       </div>
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       <div className="space-y-4">
+        {/* アイキャッチ画像 */}
+        <div>
+          <label className="block text-sm font-medium mb-2">アイキャッチ画像</label>
+          {thumbnailUrl && (
+            <div className="relative w-full h-48 mb-2">
+              <Image src={thumbnailUrl} alt="アイキャッチ" fill className="object-cover rounded-lg" />
+            </div>
+          )}
+          <ImageUploader folder="articles" label="📷 アイキャッチをアップロード" onUpload={(url) => setThumbnailUrl(url)} />
+        </div>
+
         <div>
           <label className="block text-sm font-medium mb-1">タイトル</label>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full border rounded-lg px-4 py-2 text-sm" placeholder="記事のタイトル" />
@@ -67,6 +82,10 @@ export default function NewArticlePage() {
           <label className="block text-sm font-medium mb-1">本文（Markdown）</label>
           <div data-color-mode="light">
             <MDEditor value={content} onChange={(v) => setContent(v || '')} height={400} />
+          </div>
+          {/* 本文への画像挿入 */}
+          <div className="mt-2">
+            <ImageUploader folder="articles" label="📷 本文に画像を挿入" onUpload={(url) => setContent((prev) => `${prev}\n\n![画像](${url})\n`)} />
           </div>
         </div>
         <div>

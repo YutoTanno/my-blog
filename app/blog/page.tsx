@@ -7,8 +7,11 @@ export const metadata = {
 }
 
 export default async function BlogList() {
-  const { data: articles } = await supabase.from('articles').select('*').eq('published', true).order('created_at', { ascending: false })
-
+  const { data: articles } = await supabase
+    .from('articles')
+    .select('id, title, slug, summary, tags, created_at, thumbnail_url') // ★ thumbnail_url 追加
+    .eq('published', true)
+    .order('created_at', { ascending: false })
   return (
     <main className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold mb-2">記事一覧</h1>

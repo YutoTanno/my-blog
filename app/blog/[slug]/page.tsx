@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import CodeBlock from '@/app/components/CodeBlock'
+import Image from 'next/image'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -42,6 +43,12 @@ export default async function ArticleDetail({ params }: Props) {
         <div className="mb-8">
           <p className="text-sm text-gray-400 mb-3">{new Date(article.created_at).toLocaleDateString('ja-JP')}</p>
           <h1 className="text-4xl font-bold leading-tight mb-4">{article.title}</h1>
+          {/* アイキャッチ画像 */}
+          {article.thumbnail_url && (
+            <div className="relative w-full h-64 mb-6">
+              <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover rounded-lg" />
+            </div>
+          )}
           <div className="flex gap-2 flex-wrap">
             {article.tags?.map((tag: string) => (
               <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">

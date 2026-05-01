@@ -11,6 +11,9 @@ export default function Header() {
           <Link href="/blog" className="text-sm text-gray-600">
             記事一覧
           </Link>
+          <Link href="/about" className="text-sm text-gray-600">
+            About
+          </Link>
           <a href="https://github.com/YutoTanno" target="_blank" className="text-sm text-gray-600">
             GitHub
           </a>
