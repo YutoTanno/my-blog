@@ -13,9 +13,12 @@ export default async function BlogList() {
     .eq('published', true)
     .order('created_at', { ascending: false })
   return (
-    <main className="max-w-3xl mx-auto px-4 py-16">
-      <h1 className="text-3xl font-bold mb-2">記事一覧</h1>
-      <p className="text-gray-400 text-sm mb-8">{articles?.length}件の記事</p>
+    <main style={{ maxWidth: '768px', margin: '0 auto', padding: '60px 24px' }}>
+      <div style={{ marginBottom: '40px' }}>
+        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: '#C9A84C', letterSpacing: '0.3em', marginBottom: '12px' }}>ARCHIVE</p>
+        <h1 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '48px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '4px' }}>ALL DROPS</h1>
+        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: '#555', letterSpacing: '0.1em' }}>{articles?.length} ARTICLES</p>
+      </div>
       <SearchBox articles={articles || []} />
     </main>
   )

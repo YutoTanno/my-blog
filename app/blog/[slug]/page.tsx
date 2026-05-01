@@ -2,8 +2,8 @@ import { supabase } from '@/lib/supabase'
 import { redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
-import CodeBlock from '@/app/components/CodeBlock'
 import Image from 'next/image'
+import CodeBlock from '@/app/components/CodeBlock'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -11,19 +11,19 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const { data: article } = await supabase.from('articles').select('title, summary').eq('slug', slug).single()
   return {
-    title: `${article?.title} | My Blog`,
+    title: `${article?.title} | YutoTanno`,
     description: article?.summary,
     openGraph: {
-      title: `${article?.title} | My Blog`,
+      title: `${article?.title} | YutoTanno`,
       description: article?.summary,
       url: `https://my-blog-brown-nu.vercel.app/blog/${slug}`,
-      siteName: 'My Blog',
+      siteName: 'YutoTanno',
       locale: 'ja_JP',
       type: 'article',
     },
     twitter: {
       card: 'summary',
-      title: `${article?.title} | My Blog`,
+      title: `${article?.title} | YutoTanno`,
       description: article?.summary,
     },
   }
@@ -35,29 +35,76 @@ export default async function ArticleDetail({ params }: Props) {
   if (!article) redirect('/blog')
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-16">
-      <Link href="/blog" className="text-sm text-gray-400 hover:text-gray-600 mb-8 block">
-        記事一覧に戻る
+    <main style={{ maxWidth: '768px', margin: '0 auto', padding: '48px 24px' }}>
+      {/* 戻るリンク */}
+      <Link
+        href="/blog"
+        style={{
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: '10px',
+          color: '#555',
+          letterSpacing: '0.15em',
+          textDecoration: 'none',
+          display: 'inline-block',
+          marginBottom: '40px',
+        }}>
+        ← BACK
       </Link>
+
       <article>
-        <div className="mb-8">
-          <p className="text-sm text-gray-400 mb-3">{new Date(article.created_at).toLocaleDateString('ja-JP')}</p>
-          <h1 className="text-4xl font-bold leading-tight mb-4">{article.title}</h1>
-          {/* アイキャッチ画像 */}
-          {article.thumbnail_url && (
-            <div className="relative w-full h-64 mb-6">
-              <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover rounded-lg" />
-            </div>
-          )}
-          <div className="flex gap-2 flex-wrap">
+        {/* アイキャッチ */}
+        {article.thumbnail_url && (
+          <div style={{ position: 'relative', width: '100%', height: '280px', marginBottom: '40px', borderRadius: '4px', overflow: 'hidden' }}>
+            <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover" />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, #0e0e0e)' }} />
+          </div>
+        )}
+
+        {/* ヘッダー */}
+        <div style={{ marginBottom: '40px', borderBottom: '1px solid #1e1e1e', paddingBottom: '32px' }}>
+          <p
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              color: '#555',
+              letterSpacing: '0.15em',
+              marginBottom: '16px',
+            }}>
+            {new Date(article.created_at).toLocaleDateString('ja-JP')}
+          </p>
+          <h1
+            style={{
+              fontFamily: '"Bebas Neue", sans-serif',
+              fontSize: 'clamp(32px, 6vw, 52px)',
+              color: '#F0EBE0',
+              letterSpacing: '0.05em',
+              lineHeight: 1.1,
+              marginBottom: '20px',
+            }}>
+            {article.title}
+          </h1>
+          {article.summary && <p style={{ fontSize: '14px', color: '#888', lineHeight: 1.7, marginBottom: '20px' }}>{article.summary}</p>}
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
             {article.tags?.map((tag: string) => (
-              <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+              <span
+                key={tag}
+                style={{
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  fontSize: '9px',
+                  letterSpacing: '0.1em',
+                  border: '1px solid #C9A84C',
+                  color: '#C9A84C',
+                  padding: '2px 10px',
+                  borderRadius: '2px',
+                }}>
                 {tag}
               </span>
             ))}
           </div>
         </div>
-        <div className="border-t pt-8 prose prose-gray max-w-none">
+
+        {/* 本文 */}
+        <div className="prose prose-gray max-w-none">
           <ReactMarkdown
             components={{
               code({ className, children }) {
@@ -67,11 +114,49 @@ export default async function ArticleDetail({ params }: Props) {
                 if (isBlock) {
                   return <CodeBlock language={language}>{String(children)}</CodeBlock>
                 }
-                return <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">{children}</code>
+                return (
+                  <code
+                    style={{
+                      background: '#1a1a1a',
+                      color: '#C9A84C',
+                      padding: '2px 6px',
+                      borderRadius: '2px',
+                      fontFamily: '"IBM Plex Mono", monospace',
+                      fontSize: '0.85em',
+                    }}>
+                    {children}
+                  </code>
+                )
               },
             }}>
             {article.content}
           </ReactMarkdown>
+        </div>
+
+        {/* フッター */}
+        <div style={{ marginTop: '60px', paddingTop: '32px', borderTop: '1px solid #1e1e1e', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Link
+            href="/blog"
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              color: '#555',
+              letterSpacing: '0.15em',
+              textDecoration: 'none',
+            }}>
+            ← ALL DROPS
+          </Link>
+          <Link
+            href="/about"
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              color: '#C9A84C',
+              letterSpacing: '0.15em',
+              textDecoration: 'none',
+            }}>
+            ABOUT →
+          </Link>
         </div>
       </article>
     </main>
