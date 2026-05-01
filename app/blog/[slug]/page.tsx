@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import { redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
+import CodeBlock from '@/app/components/CodeBlock'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -37,7 +38,20 @@ export default async function ArticleDetail({ params }: Props) {
           </div>
         </div>
         <div className="border-t pt-8 prose prose-gray max-w-none">
-          <ReactMarkdown>{article.content}</ReactMarkdown>
+          <ReactMarkdown
+            components={{
+              code({ className, children }) {
+                const match = /language-(\w+)/.exec(className || '')
+                const language = match ? match[1] : ''
+                const isBlock = className?.includes('language-')
+                if (isBlock) {
+                  return <CodeBlock language={language}>{String(children)}</CodeBlock>
+                }
+                return <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">{children}</code>
+              },
+            }}>
+            {article.content}
+          </ReactMarkdown>
         </div>
       </article>
     </main>
