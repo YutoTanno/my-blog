@@ -10,9 +10,6 @@ export default function Footer() {
         </Link>
         <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#444', letterSpacing: '0.2em', margin: 0 }}>© 2026 YUTOTANNO</p>
         <div style={{ display: 'flex', gap: '20px' }}>
-          <a href="https://github.com/YutoTanno" target="_blank" rel="noopener noreferrer" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.15em', textDecoration: 'none' }}>
-            GITHUB
-          </a>
           <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.15em', textDecoration: 'none' }}>
             X
           </a>

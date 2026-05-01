@@ -28,9 +28,6 @@ export default function Header() {
           <Link href="/about" style={linkStyle('/about')}>
             ABOUT
           </Link>
-          <a href="https://github.com/YutoTanno" target="_blank" rel="noopener noreferrer" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.15em', textDecoration: 'none', color: '#666' }}>
-            GITHUB
-          </a>
         </nav>
       </div>
     </header>

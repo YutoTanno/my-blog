@@ -116,22 +116,6 @@ export default async function Home() {
               }}>
               LATEST DROPS →
             </Link>
-            <a
-              href="https://github.com/YutoTanno"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: '"IBM Plex Mono", monospace',
-                fontSize: '12px',
-                letterSpacing: '0.15em',
-                border: '1px solid #2a2a2a',
-                color: '#888',
-                padding: '12px 28px',
-                borderRadius: '2px',
-                textDecoration: 'none',
-              }}>
-              GITHUB ↗
-            </a>
           </div>
         </div>
       </section>
