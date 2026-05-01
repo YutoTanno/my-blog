@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import Image from 'next/image'
 import CodeBlock from '@/app/components/CodeBlock'
+import rehypeRaw from 'rehype-raw'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -11,19 +12,19 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const { data: article } = await supabase.from('articles').select('title, summary').eq('slug', slug).single()
   return {
-    title: `${article?.title} | YutoTanno`,
+    title: `${article?.title} | cherrytan`,
     description: article?.summary,
     openGraph: {
-      title: `${article?.title} | YutoTanno`,
+      title: `${article?.title} | cherrytan`,
       description: article?.summary,
       url: `https://my-blog-brown-nu.vercel.app/blog/${slug}`,
-      siteName: 'YutoTanno',
+      siteName: 'cherrytan',
       locale: 'ja_JP',
       type: 'article',
     },
     twitter: {
       card: 'summary',
-      title: `${article?.title} | YutoTanno`,
+      title: `${article?.title} | cherrytan`,
       description: article?.summary,
     },
   }
@@ -106,6 +107,7 @@ export default async function ArticleDetail({ params }: Props) {
         {/* 本文 */}
         <div className="prose prose-gray max-w-none">
           <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
             components={{
               code({ className, children }) {
                 const match = /language-(\w+)/.exec(className || '')

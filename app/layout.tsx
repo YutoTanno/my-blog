@@ -5,21 +5,21 @@ import Footer from './components/Footer'
 import RecordLoader from './components/RecordLoader'
 
 export const metadata: Metadata = {
-  title: { default: 'YutoTanno | Dev Blog', template: '%s | YutoTanno' },
-  description: 'Next.js・TypeScriptの学習記録。Web開発の学習過程をアウトプットしています。',
+  title: { default: 'cherrytan | Dev Blog', template: '%s | cherrytan' },
+  description: 'HIPHOPについての雑談記事を書いていきます。',
   metadataBase: new URL('https://my-blog-brown-nu.vercel.app'),
   openGraph: {
-    title: 'YutoTanno | Dev Blog',
-    description: 'Next.js・TypeScriptの学習記録。Web開発の学習過程をアウトプットしています。',
+    title: 'cherrytan | Dev Blog',
+    description: 'HIPHOPについての雑談記事を書いていきます。',
     url: 'https://my-blog-brown-nu.vercel.app',
-    siteName: 'YutoTanno',
+    siteName: 'cherrytan',
     locale: 'ja_JP',
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'YutoTanno | Dev Blog',
-    description: 'Next.js・TypeScriptの学習記録。Web開発の学習過程をアウトプットしています。',
+    title: 'cherrytan | HIPHOP Blog',
+    description: 'HIPHOPについての雑談記事を書いていきます。',
   },
 }
 

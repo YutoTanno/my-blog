@@ -27,16 +27,17 @@ export default function AboutClient() {
   }
 
   const skills = [
+    { category: 'EMBEDDED', items: ['C', 'C++', 'Python'] },
     { category: 'FRONTEND', items: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'] },
     { category: 'BACKEND', items: ['Supabase', 'PostgreSQL', 'REST API'] },
-    { category: 'TOOLS', items: ['Git', 'GitHub', 'Vercel', 'VSCode'] },
+    { category: 'TOOLS', items: ['Git', 'GitHub', 'Vercel', 'Jira', 'Confluence'] },
   ]
 
   const timeline = [
-    { year: '2024', title: 'WEB開発の学習を開始', description: 'HTML・CSS・JavaScriptの基礎から学習開始。' },
-    { year: '2024', title: 'REACT・NEXT.JSを習得', description: 'コンポーネント設計・App Routerを学ぶ。' },
-    { year: '2025', title: 'このブログを自作・公開', description: 'Supabase・Vercelを使ったフルスタック開発を実践。' },
-    { year: '2025', title: '副業・フリーランスを目指して活動中', description: 'ポートフォリオ拡充・案件獲得に向けて準備中。' },
+    { year: '2014~2021', title: '仙台高専(最高にロックな学校)で色々学ぶ', description: 'お勉強ばかりしてました。HIPHOPにハマったのは高3のときです。' },
+    { year: '2021', title: '名古屋のSIerにインフラエンジニアとして就職', description: 'サーバーをガチャガチャしてました。この頃から栄のクラブに行くようになりました。' },
+    { year: '2023', title: 'SESに組込みエンジニアとして転職', description: '車のエンジン作ってました。この頃から渋谷のクラブにも行くようになりました' },
+    { year: '2026', title: '仙台にUターン転職', description: 'SESを継続。業務内容は禁則事項です……。仙台のHIPHOPシーンも勉強していきたいところ。' },
   ]
 
   return (
@@ -84,11 +85,51 @@ export default function AboutClient() {
             </div>
 
             <div>
-              <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '32px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '4px' }}>YutoTanno</h2>
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#C9A84C', letterSpacing: '0.2em', marginBottom: '12px' }}>WEB DEVELOPER</p>
-              <p style={{ fontSize: '13px', color: '#888', lineHeight: 1.8 }}>Next.js・TypeScriptを中心にWeb開発を学習しています。このブログは学習記録としてアウトプットする場として作成しました。副業・フリーランスとしての活動も目指しています。</p>
+              <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '32px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '4px' }}>cherrytan</h2>
+              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#C9A84C', letterSpacing: '0.2em', marginBottom: '12px' }}>HIPHOP Digger</p>
+              <p style={{ fontSize: '13px', color: '#888', lineHeight: 1.8 }}>
+                ご覧いただきありがとうございます。HIPHOP好きのcherrytanです。<br></br>仙台でしがないエンジニアをやってます！
+              </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* このブログについて */}
+      <section style={{ marginBottom: '56px', paddingBottom: '56px', borderBottom: '1px solid #1e1e1e' }}>
+        <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '28px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '20px' }}>THIS BLOG</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {['Next.js・TypeScript・Supabaseを使って自作しました。', '基本的には趣味(HIPHOP)についての雑談記事を書いていこうと思います。', '主にサウスの音楽を好んで聞きます。'].map((text, i) => (
+            <p key={i} style={{ fontSize: '13px', color: '#888', lineHeight: 1.8, paddingLeft: '16px', borderLeft: '2px solid #2a2a2a' }}>
+              {text}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* タイムライン */}
+      <section style={{ marginBottom: '56px', paddingBottom: '56px', borderBottom: '1px solid #1e1e1e' }}>
+        <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '28px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '28px' }}>TIMELINE</h2>
+        <div style={{ borderLeft: '1px solid #2a2a2a', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          {timeline.map((item, index) => (
+            <div key={index} style={{ position: 'relative' }}>
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '-29px',
+                  top: '4px',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  background: index === 0 ? '#C9A84C' : '#2a2a2a',
+                  border: `2px solid ${index === 0 ? '#C9A84C' : '#444'}`,
+                }}
+              />
+              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#C9A84C', letterSpacing: '0.1em', marginBottom: '4px' }}>{item.year}</p>
+              <h3 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '18px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '4px' }}>{item.title}</h3>
+              <p style={{ fontSize: '13px', color: '#666', lineHeight: 1.7 }}>{item.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -121,44 +162,6 @@ export default function AboutClient() {
         </div>
       </section>
 
-      {/* タイムライン */}
-      <section style={{ marginBottom: '56px', paddingBottom: '56px', borderBottom: '1px solid #1e1e1e' }}>
-        <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '28px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '28px' }}>TIMELINE</h2>
-        <div style={{ borderLeft: '1px solid #2a2a2a', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
-          {timeline.map((item, index) => (
-            <div key={index} style={{ position: 'relative' }}>
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '-29px',
-                  top: '4px',
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  background: index === 0 ? '#C9A84C' : '#2a2a2a',
-                  border: `2px solid ${index === 0 ? '#C9A84C' : '#444'}`,
-                }}
-              />
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#C9A84C', letterSpacing: '0.1em', marginBottom: '4px' }}>{item.year}</p>
-              <h3 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '18px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '4px' }}>{item.title}</h3>
-              <p style={{ fontSize: '13px', color: '#666', lineHeight: 1.7 }}>{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* このブログについて */}
-      <section style={{ marginBottom: '56px', paddingBottom: '56px', borderBottom: '1px solid #1e1e1e' }}>
-        <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '28px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '20px' }}>THIS BLOG</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {['Next.js・TypeScript・Supabaseを使って自作しました。', '記事の投稿・編集・削除ができる管理画面、Markdown対応、シンタックスハイライト、検索機能など本格的な機能を実装しています。', 'ポートフォリオとして公開しており、副業・就職活動にも活用しています。'].map((text, i) => (
-            <p key={i} style={{ fontSize: '13px', color: '#888', lineHeight: 1.8, paddingLeft: '16px', borderLeft: '2px solid #2a2a2a' }}>
-              {text}
-            </p>
-          ))}
-        </div>
-      </section>
-
       {/* Contact */}
       <section>
         <h2 style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '28px', color: '#F0EBE0', letterSpacing: '0.05em', marginBottom: '20px' }}>CONTACT</h2>
@@ -185,7 +188,7 @@ export default function AboutClient() {
             <span style={{ color: '#C9A84C', fontSize: '14px' }}>↗</span>
           </a>
           <a
-            href="https://twitter.com/"
+            href="https://x.com/tanto_09/"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -201,7 +204,28 @@ export default function AboutClient() {
             }}>
             <div>
               <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px' }}>X (TWITTER)</p>
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.05em', margin: 0 }}>日々の学習をつぶやいています</p>
+              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.05em', margin: 0 }}>マジメなことは一切つぶやきません</p>
+            </div>
+            <span style={{ color: '#C9A84C', fontSize: '14px' }}>↗</span>
+          </a>
+          <a
+            href="https://www.instagram.com/cherrytan_1009/?hl=ja"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              background: '#161616',
+              border: '1px solid #2a2a2a',
+              borderLeft: '3px solid #8B2020',
+              borderRadius: '4px',
+              padding: '14px 20px',
+              textDecoration: 'none',
+            }}>
+            <div>
+              <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px' }}>Instagram</p>
+              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.05em', margin: 0 }}>ストーリーメインです。</p>
             </div>
             <span style={{ color: '#C9A84C', fontSize: '14px' }}>↗</span>
           </a>
@@ -220,7 +244,7 @@ export default function AboutClient() {
             }}>
             <div>
               <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px' }}>BLOG</p>
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.05em', margin: 0 }}>技術記事一覧</p>
+              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', letterSpacing: '0.05em', margin: 0 }}>記事一覧</p>
             </div>
             <span style={{ color: '#C9A84C', fontSize: '14px' }}>→</span>
           </Link>

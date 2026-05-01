@@ -63,30 +63,17 @@ export default async function Home() {
           }}
         />
 
-        <div style={{ maxWidth: '768px', margin: '0 auto', padding: '80px 24px 80px' }}>
-          <p
-            style={{
-              fontFamily: '"IBM Plex Mono", monospace',
-              fontSize: '11px',
-              color: '#C9A84C',
-              letterSpacing: '0.3em',
-              marginBottom: '20px',
-            }}>
-            WEB DEVELOPER
-          </p>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '80px 24px 80px' }}>
           <h1
             style={{
               fontFamily: '"Bebas Neue", sans-serif',
               fontSize: 'clamp(52px, 10vw, 80px)',
-              color: '#F0EBE0',
+              color: '#C9A84C',
               letterSpacing: '0.05em',
               lineHeight: 1,
               marginBottom: '24px',
             }}>
-            NEXT.JS &<br />
-            TYPESCRIPT
-            <br />
-            <span style={{ color: '#C9A84C' }}>学習記録</span>
+            HIPHOP雑談ブログ
           </h1>
           <p
             style={{
@@ -96,9 +83,7 @@ export default async function Home() {
               marginBottom: '40px',
               maxWidth: '400px',
             }}>
-            Web開発の学習過程をアウトプットしています。
-            <br />
-            副業・ポートフォリオとして公開中。
+            新譜やアングラについての感想・雑談記事を書きます。
           </p>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <Link
@@ -114,7 +99,7 @@ export default async function Home() {
                 textDecoration: 'none',
                 fontWeight: 500,
               }}>
-              LATEST DROPS →
+              記事一覧 →
             </Link>
           </div>
         </div>
@@ -187,60 +172,6 @@ export default async function Home() {
                   <span style={{ color: '#C9A84C', fontSize: '18px', flexShrink: 0 }}>›</span>
                 </div>
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* スキルスタック */}
-      <section>
-        <div style={{ maxWidth: '768px', margin: '0 auto', padding: '60px 24px' }}>
-          <h2
-            style={{
-              fontFamily: '"Bebas Neue", sans-serif',
-              fontSize: '28px',
-              color: '#F0EBE0',
-              letterSpacing: '0.05em',
-              marginBottom: '32px',
-            }}>
-            SKILL STACK
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
-            {[
-              { name: 'Next.js', sub: 'App Router' },
-              { name: 'TypeScript', sub: 'Strict mode' },
-              { name: 'Supabase', sub: 'DB & Auth' },
-              { name: 'Tailwind CSS', sub: 'v4' },
-            ].map((skill) => (
-              <div
-                key={skill.name}
-                style={{
-                  background: '#161616',
-                  border: '1px solid #2a2a2a',
-                  borderRadius: '4px',
-                  padding: '16px',
-                }}>
-                <p
-                  style={{
-                    fontFamily: '"Bebas Neue", sans-serif',
-                    fontSize: '18px',
-                    color: '#F0EBE0',
-                    letterSpacing: '0.05em',
-                    margin: '0 0 4px',
-                  }}>
-                  {skill.name}
-                </p>
-                <p
-                  style={{
-                    fontFamily: '"IBM Plex Mono", monospace',
-                    fontSize: '10px',
-                    color: '#555',
-                    letterSpacing: '0.1em',
-                    margin: 0,
-                  }}>
-                  {skill.sub}
-                </p>
-              </div>
             ))}
           </div>
         </div>
