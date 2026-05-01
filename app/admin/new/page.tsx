@@ -17,7 +17,7 @@ export default function NewArticlePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  async function handleSubmit() {
+  async function handleSubmit(published: boolean) {
     setLoading(true)
     setError('')
     const tagsArray = tags
@@ -30,7 +30,7 @@ export default function NewArticlePage() {
       summary,
       content,
       tags: tagsArray,
-      published: true,
+      published,
     })
     if (error) {
       setError('投稿に失敗しました：' + error.message)
@@ -74,9 +74,14 @@ export default function NewArticlePage() {
           <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} className="w-full border rounded-lg px-4 py-2 text-sm" placeholder="Next.js, TypeScript, React" />
           <p className="text-xs text-gray-400 mt-1">カンマ区切りで複数入力できます</p>
         </div>
-        <button onClick={handleSubmit} disabled={loading} className="w-full bg-black text-white py-3 rounded-lg text-sm hover:bg-gray-800 disabled:opacity-50">
-          {loading ? '投稿中...' : '記事を投稿する'}
-        </button>
+        <div className="flex gap-3">
+          <button onClick={() => handleSubmit(false)} disabled={loading} className="flex-1 border py-3 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50">
+            下書き保存
+          </button>
+          <button onClick={() => handleSubmit(true)} disabled={loading} className="flex-1 bg-black text-white py-3 rounded-lg text-sm hover:bg-gray-800 disabled:opacity-50">
+            {loading ? '投稿中...' : '記事を投稿する'}
+          </button>
+        </div>
       </div>
     </main>
   )
