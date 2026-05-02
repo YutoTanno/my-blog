@@ -15,12 +15,25 @@ export default function PublishButton({ id, published }: { id: string; published
       body: JSON.stringify({ id, published: !published }),
     })
     setLoading(false)
-    window.location.reload()
+    router.refresh()
   }
 
   return (
-    <button onClick={handleToggle} disabled={loading} className={`text-xs border px-3 py-1 rounded-lg disabled:opacity-50 ${published ? 'text-gray-500 hover:bg-gray-50' : 'text-green-600 border-green-200 hover:bg-green-50'}`}>
-      {loading ? '処理中...' : published ? '非公開にする' : '公開する'}
+    <button
+      onClick={handleToggle}
+      disabled={loading}
+      style={{
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: '10px',
+        border: `1px solid ${published ? '#2a2a2a' : '#C9A84C'}`,
+        color: published ? '#666' : '#C9A84C',
+        padding: '4px 12px',
+        borderRadius: '2px',
+        background: 'transparent',
+        cursor: 'pointer',
+        opacity: loading ? 0.5 : 1,
+      }}>
+      {loading ? '...' : published ? 'UNPUBLISH' : 'PUBLISH'}
     </button>
   )
 }

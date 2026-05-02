@@ -3,16 +3,22 @@ import { NextResponse, type NextRequest } from 'next/server';
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // /admin/login は認証不要
   if (pathname.startsWith('/admin/login')) {
     return NextResponse.next();
   }
 
-  // Cookieからセッションを確認
-  const hasSession =
-    request.cookies.get('sb-access-token') ||
-    request.cookies.has('sb-refresh-token') ||
-    [...request.cookies.getAll()].some(c => c.name.includes('auth-token') || c.name.includes('supabase'));
+  // デバッグ: Cookie名を全部ログに出す
+  const cookies = [...request.cookies.getAll()];
+  console.log('=== COOKIES ===', cookies.map(c => c.name));
+
+  const hasSession = cookies.some(c =>
+    c.name.includes('supabase') ||
+    c.name.includes('sb-') ||
+    c.name.includes('auth') ||
+    c.name.startsWith('sb.')
+  );
+
+  console.log('=== hasSession ===', hasSession);
 
   if (!hasSession && pathname.startsWith('/admin')) {
     return NextResponse.redirect(new URL('/admin/login', request.url));
