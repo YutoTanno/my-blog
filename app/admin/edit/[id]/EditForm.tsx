@@ -37,22 +37,28 @@ export default function EditForm({ article }: { article: Article }) {
       .split(',')
       .map((t) => t.trim())
       .filter(Boolean)
-    const { error } = await supabase
-      .from('articles')
-      .update({
+
+    const res = await fetch('/api/articles/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: article.id,
         title,
         slug,
         summary,
         content,
         tags: tagsArray,
         thumbnail_url: thumbnailUrl,
-      })
-      .eq('id', article.id)
-    if (error) {
-      setError('更新に失敗しました：' + error.message)
+      }),
+    })
+
+    if (!res.ok) {
+      const data = await res.json()
+      setError('更新に失敗しました：' + data.error)
       setLoading(false)
       return
     }
+
     router.push('/admin')
   }
 
