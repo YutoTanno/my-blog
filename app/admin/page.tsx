@@ -64,7 +64,7 @@ export default async function AdminPage({ searchParams }: Props) {
             {drafts.map((article: Article) => (
               <li key={article.id} style={{ background: '#161616', border: '1px dashed #2a2a2a', borderRadius: '4px', padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ minWidth: 0 }}>
-                  <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{article.title}</p>
+                  <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px' }}>{article.title}</p>
                   <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', margin: 0 }}>
                     {new Date(article.created_at).toLocaleDateString('ja-JP')} · {article.view_count ?? 0} VIEWS
                   </p>
@@ -89,7 +89,7 @@ export default async function AdminPage({ searchParams }: Props) {
           {published.map((article: Article) => (
             <li key={article.id} style={{ background: '#161616', border: '1px solid #2a2a2a', borderLeft: '3px solid #C9A84C', borderRadius: '4px', padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
               <div style={{ minWidth: 0 }}>
-                <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{article.title}</p>
+                <p style={{ fontFamily: '"Bebas Neue", sans-serif', fontSize: '16px', color: '#F0EBE0', letterSpacing: '0.05em', margin: '0 0 2px' }}>{article.title}</p>
                 <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#555', margin: 0 }}>
                   {new Date(article.created_at).toLocaleDateString('ja-JP')} · {article.view_count ?? 0} VIEWS
                 </p>
