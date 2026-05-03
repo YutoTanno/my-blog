@@ -6,6 +6,7 @@ import Image from 'next/image'
 import CodeBlock from '@/app/components/CodeBlock'
 import rehypeRaw from 'rehype-raw'
 import ViewTracker from '@/app/components/ViewTracker'
+import XEmbed from '@/app/components/XEmbed'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -116,36 +117,51 @@ export default async function ArticleDetail({ params }: Props) {
             {article.view_count ?? 0} VIEWS
           </p>
         </div>
-
         {/* 本文 */}
         <div className="prose prose-gray max-w-none">
-          <ReactMarkdown
-            rehypePlugins={[rehypeRaw]}
-            components={{
+          {(() => {
+            const lines = article.content.split('\n')
+            const blocks: { type: 'md' | 'xembed'; content: string }[] = []
+
+            lines.forEach((line: string) => {
+              if (line.startsWith('XEMBED:')) {
+                blocks.push({ type: 'xembed', content: line.replace('XEMBED:', '').trim() })
+              } else {
+                const last = blocks[blocks.length - 1]
+                if (last && last.type === 'md') {
+                  last.content += '\n' + line
+                } else {
+                  blocks.push({ type: 'md', content: line })
+                }
+              }
+            })
+
+            const mdComponents: import('react-markdown').Components = {
               code({ className, children }) {
                 const match = /language-(\w+)/.exec(className || '')
                 const language = match ? match[1] : ''
                 const isBlock = className?.includes('language-')
-                if (isBlock) {
-                  return <CodeBlock language={language}>{String(children)}</CodeBlock>
-                }
+                if (isBlock) return <CodeBlock language={language}>{String(children)}</CodeBlock>
+                return <code style={{ background: '#1a1a1a', color: '#C9A84C', padding: '2px 6px', borderRadius: '2px', fontFamily: '"IBM Plex Mono", monospace', fontSize: '0.85em' }}>{children}</code>
+              },
+              a({ href, children }) {
                 return (
-                  <code
-                    style={{
-                      background: '#1a1a1a',
-                      color: '#C9A84C',
-                      padding: '2px 6px',
-                      borderRadius: '2px',
-                      fontFamily: '"IBM Plex Mono", monospace',
-                      fontSize: '0.85em',
-                    }}>
+                  <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: '#C9A84C' }}>
                     {children}
-                  </code>
+                  </a>
                 )
               },
-            }}>
-            {article.content}
-          </ReactMarkdown>
+            }
+            return blocks.map((block, i) =>
+              block.type === 'xembed' ? (
+                <XEmbed key={i} tweetUrl={block.content} />
+              ) : (
+                <ReactMarkdown key={i} rehypePlugins={[rehypeRaw]} components={mdComponents}>
+                  {block.content}
+                </ReactMarkdown>
+              ),
+            )
+          })()}
         </div>
 
         {/* フッター */}
